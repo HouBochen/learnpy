@@ -22,7 +22,29 @@ cities = {
     'yt': '烟台',
 }
 
+dis_temp = {
+    'bj':['东城','西城'],
+    'sz':['福田','南山']
+}
+
+str_temp = {
+    '南山':['粤海','蛇口'],
+    '福田':['梅林','福田中心'],
+    '东城':['安贞','朝阳门'],
+    '西城':['新街口','西四']
+}
+
 
 #通过命令指定爬取哪些城市
 def get_city():
-    pass
+    return 'bj'
+
+#爬取某个城市的行政区,返回行政区列表    
+def get_districs(city):
+    return dis_temp[city]
+
+def get_streets(district,city='sz'):
+    return str_temp[district]
+
+if __name__ == '__main__':
+    print(get_streets('南山'))
