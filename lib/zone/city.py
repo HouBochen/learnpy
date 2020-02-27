@@ -35,14 +35,14 @@ str_temp = {
 }
 
 
-#通过命令指定爬取哪些城市
+# 通过命令指定爬取哪些城市
 def get_city():
     return 'bj'
 
-#爬取某个城市的行政区,返回行政区列表    
+# 爬取某个城市的行政区,返回行政区列表    
 def get_districs(city):
     return dis_temp[city]
-
+# 爬取街道的名称，返回街道列表
 def get_streets(district,city='sz'):
     return str_temp[district]
 

@@ -1,6 +1,7 @@
 from lib.utility.path import *
 from lib.zone.city import *
 from lib.spider.base_spider import *
+import threadpool
 
 st_dic = {}
 
@@ -30,26 +31,35 @@ class ErShouSpider(BaseSpider):
 				st_dic[item] = district
 		print('streetlist:{0}'.format(streetlist))
 		print('st_dic:{0}'.format(st_dic))
+		# 准备参数
+		nones = [None for i in range(len(streetlist))]
+		city_list = [city for i in range(len(streetlist))]
+		args = zip(zip(city_list,streetlist),nones)
+		# print(list(args))
+		# args: [(('bj', '安贞'), None), (('bj', '朝阳门'), None), (('bj', '新街口'), None), (('bj', '西四'), None)]
 
-		self.save_data(city,streetlist[0])
-
-
+		pool_size = THREAD_POOL_SIZE
+		pool = threadpool.ThreadPool(pool_size)
+		my_requests = threadpool.makeRequests(self.save_data, args)
+		[pool.putRequest(req) for req in my_requests]
+		pool.wait()
+		pool.dismissWorkers(pool_size, do_join=True)  # 完成后退出
 
 	# 保存文件
 	def save_data(self,city_name,street_name,fmt='csv'):
-		district_name = st_dic.get(street_name)
-		csvfilename = self.today_path + '/{0}_{1}.'.format(district_name,street_name) + fmt
-		with open(csvfilename,'w') as f:
-			results = self.collect_data(city_name,street_name)
-			for result in results:
-				f.write(result+'\n')
-		print('ok')
-
+		# district_name = st_dic.get(street_name)
+		# csvfilename = self.today_path + '/{0}_{1}.'.format(district_name,street_name) + fmt
+		# with open(csvfilename,'w') as f:
+		# 	results = self.collect_data(city_name,street_name)
+		# 	for result in results:
+		# 		f.write(result+'\n')
+		# print('ok')
+		print('cityname:{0}'.format(city_name))
+		print('streetname:{0}'.format(street_name))
 
 	# 爬取內容
 	def collect_data(self,city_name,street_name):
 		return ['hello' for item in range(10)]
-
 
 if __name__ == '__main__':
 	pass

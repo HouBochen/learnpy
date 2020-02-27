@@ -1,6 +1,7 @@
 from lib.utility.date import *
 
 SPIDER_NAME = 'ke'
+THREAD_POOL_SIZE = 10
 
 class BaseSpider(object):
 
