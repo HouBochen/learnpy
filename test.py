@@ -1,3 +1,5 @@
+import os
+
 l1 = ['a','b','c','d']
 l2 = ['aaa']
 
@@ -12,6 +14,7 @@ print(dic1.keys(),dic1.values())
 
 temp = ['hello' for i in range(3)]
 print(temp)
+
 
 
 # temp = [None for i in range(len(areas))]
